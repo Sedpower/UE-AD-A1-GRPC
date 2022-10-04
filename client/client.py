@@ -29,8 +29,9 @@ def PutRateByMovieId(stub, movieRateById):
     movie = stub.PutRateByMovieId(movieRateById)
     print(movie)
 
-def DeleteByMovieId(self, request, context):
-    raise NotImplementedError('Method not implemented!')
+def DeleteByMovieId(stub, id):
+    movie = stub.DeleteByMovieId(id)
+    print(movie)
 
 def run():
     # NOTE(gRPC Python Team): .close() is possible on a channel and should be
@@ -61,6 +62,10 @@ def run():
         print("---------PutRateByMovieId-------------")
         movie = movie_pb2.MovieIdRating(id="id", rating=0.0)
         PutRateByMovieId(stub, movie)
+
+        print("---------DeleteByMovieId-------------")
+        id = movie_pb2.MovieID(id="id")
+        DeleteByMovieId(stub, id)
 
     channel.close()
 
