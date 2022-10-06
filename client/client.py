@@ -37,8 +37,9 @@ def PutRateByMovieId(stub, movieRateById):
     print(movie)
 
 
-def DeleteByMovieId(self, request, context):
-    raise NotImplementedError('Method not implemented!')
+def DeleteByMovieId(stub, id):
+    movie = stub.DeleteByMovieId(id)
+    print(movie)
 
 
 def GetSchedule(stub):
@@ -83,7 +84,12 @@ def run():
 
         print("---------PutRateByMovieId-------------")
         movie = movie_pb2.MovieIdRating(id="id", rating=0.0)
-        PutRateByMovieId(stub, movie)"""
+        PutRateByMovieId(stub, movie)
+
+        print("---------DeleteByMovieId-------------")
+        id = movie_pb2.MovieID(id="id")
+        DeleteByMovieId(stub, id)
+        """
 
     with grpc.insecure_channel('localhost:30O2') as channel:
         stub = showtime_pb2_grpc.ShowtimeStub(channel)

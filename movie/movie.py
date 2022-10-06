@@ -53,10 +53,12 @@ class MovieServicer(movie_pb2_grpc.MovieServicer):
         return self.GetMovieByID(request, context)
 
     def DeleteByMovieId(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        for movie in self.db:
+            if movie['id'] == request.id:
+                print("delete trouvé")
+                self.db.remove(movie)
+                return movie_pb2.MovieID(id=request.id)
+        return movie_pb2.MovieID(id="pas trouve")
 
 
 def serve():
