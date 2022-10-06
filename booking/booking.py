@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, jsonify, make_response
 import requests
 import json
 from werkzeug.exceptions import NotFound
+import grpc
+import showtime_pb2
+import showtime_pb2_grpc
 
 app = Flask(__name__)
 
@@ -37,6 +40,25 @@ def get_booking_for_user(userid):
 @app.route("/bookings/<userid>", methods=['POST'])
 def add_booking_byuser(userid):
    req = request.get_json()
+
+   # appelle api showtime pour savoir si le film est présent à la date donnée
+
+   with grpc.insecure_channel('localhost:3002') as channel:
+
+      stub = showtime_pb2_grpc.ShowtimeStub(channel)
+
+      date = showtime_pb2.Date(date=str(req["date"]))
+      res_movies = stub.GetScheduleByDate(date)
+      trouve =  False
+      for moviesId in res_movies.movies:
+         if str(req["movies"]) == str(moviesId):
+            trouve = True
+
+   channel.close()
+
+   if not trouve:
+      return make_response(jsonify({"error": "bad input parameter"}), 400)
+
    for booking in bookings:
       if str(userid) == str(booking["userid"]):
          for dates in booking["dates"]:
