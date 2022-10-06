@@ -57,7 +57,7 @@ def add_booking_byuser(userid):
    channel.close()
 
    if not trouve:
-      return make_response(jsonify({"error": "bad input parameter"}), 400)
+      return make_response(jsonify({"error": "movie non dispo"}), 400)
 
    for booking in bookings:
       if str(userid) == str(booking["userid"]):
