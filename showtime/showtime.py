@@ -12,10 +12,8 @@ class ShowtimeServicer(showtime_pb2_grpc.ShowtimeServicer):
             self.db = json.load(jsf)["schedule"]
 
     def GetSchedule(self, request, context):
-        print(self.db)
         for schedule in self.db:
-            print(schedule['movies'][0])
-            yield showtime_pb2.Schedule(date=schedule['date'], movies=schedule['movies'][0])
+            yield showtime_pb2.Schedule(date=schedule['date'], movies=schedule['movies'])
 
     def GetScheduleByDate(self, request, context):
         for schedule in self.db:
@@ -28,6 +26,7 @@ def serve():
     showtime_pb2_grpc.add_ShowtimeServicer_to_server(ShowtimeServicer(), server)
     server.add_insecure_port('[::]:3002')
     server.start()
+    print("started")
     server.wait_for_termination()
 
 

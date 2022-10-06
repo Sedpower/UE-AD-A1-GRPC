@@ -7,7 +7,7 @@ service Showtime {
 
 message Schedule {
   string date = 1;
-  string movies = 2;
+  repeated string movies = 2;
 }
 
 message Date {

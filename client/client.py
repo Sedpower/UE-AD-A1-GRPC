@@ -44,10 +44,8 @@ def DeleteByMovieId(stub, id):
 
 def GetSchedule(stub):
     allSchedules = stub.GetSchedule(showtime_pb2.ShowtimeEmpty())
-    print(allSchedules)
-    '''    for schedule in allSchedules:
-        print(schedule)'''
-
+    for s in allSchedules:
+        print(s)
 
 def GetScheduleByDate(stub, date):
     schedule = stub.GetScheduleByDate(date)
@@ -91,7 +89,7 @@ def run():
         DeleteByMovieId(stub, id)
         """
 
-    with grpc.insecure_channel('localhost:30O2') as channel:
+    with grpc.insecure_channel('localhost:3002') as channel:
         stub = showtime_pb2_grpc.ShowtimeStub(channel)
 
         print("---------GetSchedule-------------")
