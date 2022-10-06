@@ -55,11 +55,10 @@ class MovieServicer(movie_pb2_grpc.MovieServicer):
     def DeleteByMovieId(self, request, context):
         for movie in self.db:
             if movie['id'] == request.id:
+                print("delete trouvé")
                 self.db.remove(movie)
-                return movie_pb2.MovieData(title="", rating=0.0, director="",
-                                   id=request.id)
-        return movie_pb2.MovieData(title="", rating=0.0, director="",
-                                   id="")
+                return movie_pb2.MovieID(id=request.id)
+        return movie_pb2.MovieID(id="pas trouve")
 
 
 def serve():
