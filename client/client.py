@@ -44,8 +44,9 @@ def DeleteByMovieId(stub, id):
 
 def GetSchedule(stub):
     allSchedules = stub.GetSchedule(showtime_pb2.ShowtimeEmpty())
-    for s in allSchedules:
-        print(s)
+    for schedule in allSchedules:
+        print(schedule)
+
 
 def GetScheduleByDate(stub, date):
     schedule = stub.GetScheduleByDate(date)
@@ -56,10 +57,9 @@ def run():
     # NOTE(gRPC Python Team): .close() is possible on a channel and should be
     # used in circumstances in which the with statement does not fit the needs
     # of the code.
-    """
+
     with grpc.insecure_channel('localhost:3001') as channel:
         stub = movie_pb2_grpc.MovieStub(channel)
-
 
         print("-------------- GetMovieByID --------------")
         movieid = movie_pb2.MovieID(id="a8034f44-aee4-44cf-b32c-74cf452aaaae")
@@ -87,7 +87,6 @@ def run():
         print("---------DeleteByMovieId-------------")
         id = movie_pb2.MovieID(id="id")
         DeleteByMovieId(stub, id)
-        """
 
     with grpc.insecure_channel('localhost:3002') as channel:
         stub = showtime_pb2_grpc.ShowtimeStub(channel)
