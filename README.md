@@ -35,9 +35,7 @@ Nous n'avons pas utilisé Docker Compose
 
 ## Instructions PyCharm
 
-Il n'y a pas besoin de régénérer les pb2 ils sont normalement à jour avec le code<br>
-_Néanmoins en cas de besoin 
-
+Executer le fichier `generate.sh` pour générer les fichiers pb2 des différents services gRPC<br>
 Faire un run des 4 fichiers `.py` (`showtime.py`,`user.py`,`movie.py`,`booking.py`)
 
 Lancer ensuite le fichier `client.py`
